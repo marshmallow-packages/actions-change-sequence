@@ -1,6 +1,6 @@
 ![alt text](https://cdn.marshmallow-office.com/media/images/logo/marshmallow.transparent.red.png "marshmallow.")
 
-# MrMallow
+# Laravel Nova Change Sequence
 Update the sequences on your resource in Laravel Nova. This package currently supports:
 - [x] Place at the top
 - [x] Place at the bottom
