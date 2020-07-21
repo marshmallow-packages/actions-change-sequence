@@ -11,7 +11,7 @@ trait SequenceHelper
 
 	protected $direction;
 
-	public function __construct($direction = 'asc', $column = 'order')
+	public function __construct($direction = 'asc', $column = 'sequence')
     {
     	$this->direction = strtolower($direction);
     	$this->column = $column;

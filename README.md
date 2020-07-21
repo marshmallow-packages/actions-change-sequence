@@ -25,6 +25,15 @@ public function actions(Request $request)
 }
 ```
 
+By default we will use a sequence `ascending` and check for the column `sequence`. You can override this in the constructor:
+```php
+
+SequenceActions::make('asc', 'sequence');
+
+new SequenceFirst('desc', 'order_column');
+
+```
+
 Optionaly, you can add every action manualy. We don't recommend this. If you use the shorthand above, this will make sure you will directly profit of new actions added in the future.
 ```php
 public function actions(Request $request)

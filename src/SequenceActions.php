@@ -8,7 +8,7 @@ use Marshmallow\Nova\Actions\Sequence\SequencePlace;
 
 class SequenceActions
 {
-	public static function make($direction = 'asc', $column = 'order')
+	public static function make($direction = 'asc', $column = 'sequence')
 	{
 		return [
     		new SequenceFirst($direction, $column),
