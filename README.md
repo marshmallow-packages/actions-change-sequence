@@ -8,6 +8,8 @@ Update the sequences on your resource in Laravel Nova. This package currently su
 <!-- - [ ] x places higher -->
 <!-- - [ ] x places lower -->
 
+<img src="https://gitlab.com/marshmallow-packages/nova/actions/change-sequence/-/raw/master/resources/screenshots/options.png">
+
 ### Installatie
 ```bash
 composer require marshmallow/actions-change-sequence
