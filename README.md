@@ -19,9 +19,9 @@ composer require marshmallow/actions-change-sequence
 ```php
 public function actions(Request $request)
 {
-	return array_merge([
-		//
-	], SequenceActions::make());
+    return array_merge([
+	    //
+    ], SequenceActions::make());
 }
 ```
 
@@ -29,10 +29,10 @@ Optionaly, you can add every action manualy. We don't recommend this. If you use
 ```php
 public function actions(Request $request)
 {
-	return [
-		new SequenceFirst,
-		new SequenceLast,
-		new SequencePlace,
-	];
+    return [
+        new SequenceFirst,
+        new SequenceLast,
+        new SequencePlace,
+    ];
 }
 ```
