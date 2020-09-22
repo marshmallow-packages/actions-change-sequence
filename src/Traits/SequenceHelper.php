@@ -30,10 +30,13 @@ trait SequenceHelper
     	return get_class($model);
     }
 
-    protected function getBaseQueryForOrdering(Collection $models)
+    protected function getBaseQueryForOrdering($model)
     {
-    	$first_model = $models->first();
-    	$resource_class = $this->getResourceClass($first_model);
+    	if ($model instanceof Collection) {
+    		$model = $model->first();
+    	}
+
+    	$resource_class = $this->getResourceClass($model);
     	$query = $resource_class::orderBy($this->column, $this->direction);
     	if ($this->groupBy) {
     		$query->where($this->groupBy, $first_model->{$this->groupBy});
@@ -50,8 +53,7 @@ trait SequenceHelper
 
     protected function changeSequenceWithLargeNumber(Model $model, $add = 1000)
     {
-    	$resource_class = $this->getResourceClass($model);
-    	$query = $this->getBaseQueryForOrdering($models);
+    	$query = $this->getBaseQueryForOrdering($model);
     	$models = $query->get();
     	foreach ($models as $model) {
     		$this->setSequence(
@@ -72,8 +74,7 @@ trait SequenceHelper
 
     protected function resetTheSequenceToNormalNumber(Model $model, array $resequenced, $sequence = 1000)
     {
-    	$resource_class = $this->getResourceClass($model);
-    	$query = $this->getBaseQueryForOrdering($models);
+    	$query = $this->getBaseQueryForOrdering($model);
     	$models = $query->whereNotIn('id', $resequenced)->get();
 		$this->setSequenceOnModels($models, $sequence);
     }
