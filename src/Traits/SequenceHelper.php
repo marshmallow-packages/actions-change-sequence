@@ -39,7 +39,7 @@ trait SequenceHelper
     	$resource_class = $this->getResourceClass($model);
     	$query = $resource_class::orderBy($this->column, $this->direction);
     	if ($this->groupBy) {
-    		$query->where($this->groupBy, $first_model->{$this->groupBy});
+    		$query->where($this->groupBy, $model->{$this->groupBy});
     	}
 
     	return $query;
