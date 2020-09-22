@@ -25,6 +25,17 @@ public function actions(Request $request)
 }
 ```
 
+If you want to sequence a group op items in a resources you can use the `group()` method. For instance; if you have a table with invoice items and you want to change the order of the items on a invoice, you really need to change the sequence of only the items in a certant invoice, not the whole table. See the example below.
+
+```php
+public function actions(Request $request)
+{
+    return array_merge([
+	    //
+    ], SequenceActions::groupBy('invoice_id')->make());
+}
+```
+
 By default we will use a sequence `ascending` and check for the column `sequence`. You can override this in the constructor:
 ```php
 

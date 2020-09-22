@@ -9,12 +9,15 @@ trait SequenceHelper
 {
 	protected $column;
 
+	protected $groupBy;
+
 	protected $direction;
 
-	public function __construct($direction = 'asc', $column = 'sequence')
+	public function __construct($direction = 'asc', $column = 'sequence', $groupBy = null)
     {
     	$this->direction = strtolower($direction);
     	$this->column = $column;
+    	$this->groupBy = $groupBy;
     }
 
     protected function oppositeDirection()
@@ -27,16 +30,29 @@ trait SequenceHelper
     	return get_class($model);
     }
 
+    protected function getBaseQueryForOrdering(Collection $models)
+    {
+    	$first_model = $models->first();
+    	$resource_class = $this->getResourceClass($first_model);
+    	$query = $resource_class::orderBy($this->column, $this->direction);
+    	if ($this->groupBy) {
+    		$query->where($this->groupBy, $first_model->{$this->groupBy});
+    	}
+
+    	return $query;
+    }
+
     protected function getAllModelsOrdered(Collection $models)
     {
-    	$resource_class = $this->getResourceClass($models->first());
-    	return $resource_class::orderBy($this->column, $this->direction)->get();
+    	$query = $this->getBaseQueryForOrdering($models);
+    	return $query->get();
     }
 
     protected function changeSequenceWithLargeNumber(Model $model, $add = 1000)
     {
     	$resource_class = $this->getResourceClass($model);
-    	$models = $resource_class::orderBy($this->column, $this->direction)->get();
+    	$query = $this->getBaseQueryForOrdering($models);
+    	$models = $query->get();
     	foreach ($models as $model) {
     		$this->setSequence(
     			$model,
@@ -57,7 +73,8 @@ trait SequenceHelper
     protected function resetTheSequenceToNormalNumber(Model $model, array $resequenced, $sequence = 1000)
     {
     	$resource_class = $this->getResourceClass($model);
-		$models = $resource_class::whereNotIn('id', $resequenced)->orderBy($this->column, $this->direction)->get();
+    	$query = $this->getBaseQueryForOrdering($models);
+    	$models = $query->whereNotIn('id', $resequenced)->get();
 		$this->setSequenceOnModels($models, $sequence);
     }
 

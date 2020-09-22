@@ -24,5 +24,12 @@
         "psr-4": {
             "Marshmallow\\Nova\\Actions\\Sequence\\": "src"
         }
+    },
+    "extra": {
+        "laravel": {
+            "aliases": {
+                "SequenceActions": "Marshmallow\\Nova\\Actions\\Sequence\\Facades\\SequenceActions"
+            }
+        }
     }
 }
