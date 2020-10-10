@@ -3,10 +3,10 @@
 namespace Marshmallow\Nova\Actions\Sequence;
 
 use Illuminate\Bus\Queueable;
-use Laravel\Nova\Actions\Action;
-use Illuminate\Support\Collection;
-use Laravel\Nova\Fields\ActionFields;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Collection;
+use Laravel\Nova\Actions\Action;
+use Laravel\Nova\Fields\ActionFields;
 use Marshmallow\Nova\Actions\Sequence\Traits\SequenceHelper;
 
 class SequenceFirst extends Action
@@ -38,30 +38,30 @@ class SequenceFirst extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-    	$this->changeSequenceWithLargeNumber(
-    		$models->first()
-    	);
+        $this->changeSequenceWithLargeNumber(
+            $models->first()
+        );
 
-    	/**
+        /**
     	 * Set the correct sequence on the provided models.
     	 */
-    	$sequence = 1;
-    	$resequenced = [];
-    	foreach ($models->fresh() as $model) {
-    		$this->setSequence(
-    			$model,
-    			$sequence
-    		);
+        $sequence = 1;
+        $resequenced = [];
+        foreach ($models->fresh() as $model) {
+            $this->setSequence(
+                $model,
+                $sequence
+            );
 
-    		$resequenced[] = $model->id;
-    		$sequence++;
-    	}
+            $resequenced[] = $model->id;
+            $sequence++;
+        }
 
-    	$this->resetTheSequenceToNormalNumber(
-    		$models->first(),
-    		$resequenced,
-    		$sequence
-    	);
+        $this->resetTheSequenceToNormalNumber(
+            $models->first(),
+            $resequenced,
+            $sequence
+        );
     }
 
     /**

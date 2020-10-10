@@ -3,10 +3,10 @@
 namespace Marshmallow\Nova\Actions\Sequence;
 
 use Illuminate\Bus\Queueable;
-use Laravel\Nova\Actions\Action;
-use Illuminate\Support\Collection;
-use Laravel\Nova\Fields\ActionFields;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Collection;
+use Laravel\Nova\Actions\Action;
+use Laravel\Nova\Fields\ActionFields;
 use Marshmallow\Nova\Actions\Sequence\Traits\SequenceHelper;
 
 class SequenceLast extends Action
@@ -28,6 +28,7 @@ class SequenceLast extends Action
      * @var string
      */
     public $confirmText = 'Are you sure you want to put this item (these items) at the bottom?';
+
     /**
      * Perform the action on the given models.
      *
@@ -37,15 +38,15 @@ class SequenceLast extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-    	$resource_class = $this->getResourceClass($models->first());
-    	$all_models = $resource_class::orderBy($this->column, $this->direction)->get();
+        $resource_class = $this->getResourceClass($models->first());
+        $all_models = $resource_class::orderBy($this->column, $this->direction)->get();
 
-    	$this->setSequenceOnModels(
-    		$models,
-    		$all_models->count() + 1000
-    	);
+        $this->setSequenceOnModels(
+            $models,
+            $all_models->count() + 1000
+        );
 
-    	$all_models = $resource_class::orderBy($this->column, $this->direction)->get();
-    	$this->setSequenceOnModels($all_models, 1);
+        $all_models = $resource_class::orderBy($this->column, $this->direction)->get();
+        $this->setSequenceOnModels($all_models, 1);
     }
 }
