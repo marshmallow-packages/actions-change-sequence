@@ -17,9 +17,6 @@
         "email": "stef@marshmallow.dev"
     },
     "minimum-stability": "dev",
-    "require": {
-        "php": "^7.4"
-    },
     "autoload": {
         "psr-4": {
             "Marshmallow\\Nova\\Actions\\Sequence\\": "src"
