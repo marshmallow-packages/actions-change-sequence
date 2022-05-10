@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Marshmallow\Nova\Actions\Sequence\Traits\SequenceHelper;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class SequenceFirst extends Action
 {
@@ -43,8 +44,8 @@ class SequenceFirst extends Action
         );
 
         /**
-    	 * Set the correct sequence on the provided models.
-    	 */
+         * Set the correct sequence on the provided models.
+         */
         $sequence = 1;
         $resequenced = [];
         foreach ($models->fresh() as $model) {
@@ -69,7 +70,7 @@ class SequenceFirst extends Action
      *
      * @return array
      */
-    public function fields()
+    public function fields(NovaRequest $request)
     {
         return [];
     }

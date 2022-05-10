@@ -1,7 +1,12 @@
 {
     "name": "marshmallow/actions-change-sequence",
     "description": "A Nova action to change the sequence of resources more easily",
-    "keywords": ["marshmallow", "nova", "change sequence", "sequence"],
+    "keywords": [
+        "marshmallow",
+        "nova",
+        "change sequence",
+        "sequence"
+    ],
     "homepage": "https://github.com/Marshmallow-Development/",
     "type": "library",
     "license": "MIT",
@@ -11,6 +16,16 @@
             "email": "stef@marshmallow.dev",
             "homepage": "https://marshmallow.dev",
             "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.0|^8.1",
+        "laravel/nova": "^4.0"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://nova.laravel.com"
         }
     ],
     "support": {

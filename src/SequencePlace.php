@@ -9,6 +9,7 @@ use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Number;
 use Marshmallow\Nova\Actions\Sequence\Traits\SequenceHelper;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class SequencePlace extends Action
 {
@@ -42,8 +43,8 @@ class SequencePlace extends Action
         $model_ids = $models->pluck('id')->toArray();
         $offset = ($models->first()->{$this->column} < $fields->place) ? 1 : 2;
         /**
-    	 * First, make room to add the new resource placement
-    	 */
+         * First, make room to add the new resource placement
+         */
         $all_models = $this->getAllModelsOrdered($models);
         $sequence = ($models->count()) + 1;
         foreach ($all_models as $model) {
@@ -57,21 +58,21 @@ class SequencePlace extends Action
 
 
         /**
-    	 * Next, place the resources in the correct place.
-    	 */
+         * Next, place the resources in the correct place.
+         */
         if ($fields->place == 1) {
             $this->setSequenceOnModels($models, 1);
         } else {
             $resource_class = $this->getResourceClass($models->first());
             $after_this = $resource_class::orderBy($this->column, $this->direction)
-                                            ->offset($fields->place - $offset)
-                                            ->limit(1)
-                                            ->first();
+                ->offset($fields->place - $offset)
+                ->limit(1)
+                ->first();
 
-            if (! $after_this) {
+            if (!$after_this) {
                 $after_this = $resource_class::orderBy($this->column, $this->oppositeDirection($this->direction))
-                                            ->limit(1)
-                                            ->first();
+                    ->limit(1)
+                    ->first();
             }
 
             $sequence = $after_this->{$this->column} + 1;
@@ -92,11 +93,11 @@ class SequencePlace extends Action
             // 		$sequence_updated = true;
             // 		foreach ($models as $_model) {
             // 			$this->setSequence(
-               //  			$_model,
-               //  			$sequence
-               //  		);
+            //  			$_model,
+            //  			$sequence
+            //  		);
 
-               //  		$sequence++;
+            //  		$sequence++;
             // 		}
             // 	} else {
             // 		if (in_array($model->id, $model_ids)) {
@@ -123,8 +124,8 @@ class SequencePlace extends Action
 
 
         /**
-    	 * Now reset the order so the numbers 1,2,3
-    	 */
+         * Now reset the order so the numbers 1,2,3
+         */
         $this->setSequenceOnModels(
             $this->getAllModelsOrdered($models),
             1
@@ -136,7 +137,7 @@ class SequencePlace extends Action
      *
      * @return array
      */
-    public function fields()
+    public function fields(NovaRequest $request)
     {
         return [
             Number::make('Place')
